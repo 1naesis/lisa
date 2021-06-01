@@ -1,0 +1,40 @@
+{% extends 'crm/base.html.twig' %}
+{% block context %}
+    <div class="top-line">
+        <div class="breadcrumb">
+            <p class="top-line-title">Настройки</p>
+        </div>
+        <p class="top-line-date">8 Апрель 2021 18:50</p>
+    </div>
+    <div class="title-block">
+        <p class="title-block-title">Название</p>
+    </div>
+    <div class="options-block">
+        <div class="option-block" onclick="togglePodcat(this);">
+            <p class="option-block-title">настройка услуг
+                <span class="arrow-drop">&#9660;</span>
+            </p>
+            <ul class="option-block-podcat">
+                <li class="option-block-podcat-item">
+                    <a class="option-block-podcat-item-link" href="#">
+                        Категории
+                    </a>
+                </li>
+                <li class="option-block-podcat-item">
+                    <a class="option-block-podcat-item-link" href="#">
+                        Услуги
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="option-block">
+            <p class="option-block-title">записи</p>
+        </div>
+        <div class="option-block" onclick="location.href = '{{ path('lk/setting/position') }}';">
+            <p class="option-block-title">должности</p>
+        </div>
+        <div class="option-block" onclick="location.href = '{{ path('lk/setting/staff') }}';">
+            <p class="option-block-title">сотрудники</p>
+        </div>
+    </div>
+{% endblock %}

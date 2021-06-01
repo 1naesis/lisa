@@ -1,0 +1,95 @@
+@media (max-width: 900px){
+    .staff-option-block{
+        padding: 15px 15px;
+    }
+}
+@media (max-width: 770px){
+    .bg-img{
+        display: none;
+    }
+    .wrap-login{
+        justify-content: center;
+    }
+    .login{
+        background-color: #fff;
+    }
+    .top-line{
+        flex-direction: column;
+    }
+    .title-block{
+        text-align: center;
+    }
+    .title-block-title{
+        margin-left: 0;
+    }
+    .option-block{
+        padding: 13px;
+        text-align: center;
+    }
+    .option-block-title{
+        font-size: 12px;
+    }
+    .header{
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+    .context{
+        margin-left: 100px;
+    }
+}
+@media (max-width: 550px){
+    .option-block-status-identification,
+    .option-block-staff,
+    .option-info-user{
+        margin-left: 0;
+    }
+    .staff-option-block,
+    .staff-option-identity,
+    .option-block-staff{
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+    .option-info-user > p{
+        text-align: center;
+    }
+    .title-row-link{
+        text-align: center;
+    }
+}
+@media (max-width: 440px){
+    .context{
+        padding: 0 20px;
+    }
+    .top-line-title{
+        font-size: 17px;
+    }
+    .breadcrumb-item > svg{
+        height: 13px;
+    }
+    .title{
+        font-size: 20px;
+    }
+    .title-rows{
+        justify-content: center;
+    }
+
+
+    .login-mail>p,
+    .login-password>p{
+        font-size: 13px;
+    }
+    .login-mail>input,
+    .login-password>input{
+        padding: 10px 100px 10px 20px;
+    }
+    .login-remember,
+    .login-forget{
+        font-size: 11px;
+    }
+    .form-btn{
+        font-size: 13px;
+    }
+}

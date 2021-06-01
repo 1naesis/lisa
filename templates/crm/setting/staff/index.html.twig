@@ -1,0 +1,84 @@
+{% extends 'crm/base.html.twig' %}
+{% block context %}
+    <div class="top-line">
+        <div class="breadcrumb">
+            <p class="top-line-title">
+                <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
+                <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </p>
+            <p class="top-line-next-page">
+                Список cотрудников
+            </p>
+        </div>
+        <p class="top-line-date">8 Апрель 2021 18:50</p>
+    </div>
+    <!-- <div class="filter-block">
+        <p class="title-block-title">Тут фильтрация</p>
+    </div> -->
+    <div class="title-rows">
+        <!-- <p class="title-row-title">Статус</p>
+        <p class="title-row-title">Имя</p>
+        <p class="title-row-title">Услуги</p> -->
+        <a href="{{ path('lk/setting/staff_edit', {'staff': 0}) }}" class="title-row-link">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1V9.5M1 5H11" stroke="#FCFAFA" stroke-linecap="round"/>
+            </svg>
+
+            Добавить сотрудника
+        </a>
+    </div>
+    <div class="options-block">
+        {% for user in users %}
+            <div class="staff-option-block">
+                <div class="staff-option-identity">
+                    <div class="option-block-status">
+                        <!-- <svg width="36" height="19" viewBox="0 0 36 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 2H34M2 9.5H34M2 17H34" stroke="#966B59" stroke-width="3" stroke-linecap="round"/>
+                        </svg> -->
+                        <div class="option-block-status-identification">
+                            <p class="option-block-status-text">активен</p>
+                        </div>
+                    </div>
+                    <div class="option-block-staff">
+                        <div class="option-avatar-user">
+                            {% if user.avatar is not empty %}
+                                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="">
+                            {% else %}
+                                <img src="{{ asset('assets/image/def-user.png') }}" alt="">
+                            {% endif %}
+
+                        </div>
+                        <div class="option-info-user">
+                            <p class="option-user-name">{{ user.surname }} {{ user.name }}</p>
+                            <p class="option-user-position">{{ user.position.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div>
+                    <p>5</p>
+                </div> -->
+                <div>
+                    <a href="{{ path('lk/setting/staff_edit', {'staff': user.id}) }}">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <rect class="option-staff-editor" width="40" height="40" rx="3" fill="#966B59"/>
+                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="10" y="10" width="20" height="20">
+                                <rect x="10" y="10" width="20" height="20" fill="url(#pattern0)"/>
+                            </mask>
+                            <g mask="url(#mask0)">
+                                <rect x="10" y="10" width="20" height="20" fill="#FCFAFA"/>
+                            </g>
+                            <defs>
+                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                    <use xlink:href="#image0" transform="scale(0.015625)"/>
+                                </pattern>
+                                <image id="image0" width="64" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADmElEQVR4nO3by4scVRTH8c/EcTAmPkZX6kKJcSJGBAOiyBAVjVm5UUHQcZmFYNwad+LjX1ARAgqCLlRcCoKgeWh8RXEliQuNoolP1ExC1IyL05eurqnurpnu6u5y6geXbqrOPZxvPW6de+rWlHprPW7DZmzAT/gSn2BpjHFVrsvxAk4K0Hz7Do9hZlwBVqm78Zti8Hz7HFf2cjZVZaQVaAEv4ZzMtsM4iL/ElXFn6zfpGG7GDyOKsTIt4B/ts/sV5gvspvEIFjO2B7BuNGFWozz8x5jt02cepzN9HqoywCqVh/9Uf/ikPZl+H1USXcXKwx/GJSvov1H7VjiLy4YdYJXKw/+Nbavw817Gx+1Di65i5eFTW8TT4syW1euZ/vcNN8xqlIfPjuapfY3rSvqr1RWQhz8kBry78LbOg/A7dvbxtxGn1GQMKIK/OGezE99kbM7gjh4+n8jYTvRToAj+oi62szqvhp9xdYHdrTrzgAeHG/LwlIf/UHf4pBm8lenzhcgAk27SOV/Yb0IzwdXAJ50v8oLU99HW9jz8MRN67w8Cn3SDGAeWRC0gP1P8HluGFO9QlYf/wMrhk/Zm/GTbmoAnssNaw184oM/t4hk/8fAPiHw+BXrQ4PDz+CPj80flM8SRqoHXwDfwBzTwA6mBV1P4Cwb02cBr4Bv42sDv18APpAZeA9/AN/AD+qxEefh91hD8/Za/pb1nQJ/bxZKWiS9jEZd6UdV1H25chb9awcMJxQdgSdTk9yi/2Kp28LPawf4izviL2i8jUntZ56upItUOnlhelgI+lNm+RZS0swdhr+5XQi3hiTp+CvqV3L5py9/K7C7wUVt4eEo78CcL9k+JhYvJ5pRYt5tUa3h4TTv4hS42M/gsY/dma3vt4Yk1eQnglh5227RfT/2LXf4H8FP4Uxvi0j72b+gcD2oNTyw4ThC/lrB/WA3hez275zL/j7R+Z7Gp1baK3H0TrrG89H0cO8Si5lpql/aZPKl4vV63NvFnvp82iOJmWeCz+Bbv4nnFq7YmUkWZ27l4R3yLk9WS+BTlqLgljub+n64uzNFqh84z+ziux3njDGqUukLMAM+IcWBNar3+z/1GjRo1qr1SHjAn1t2Wqe0dEV9k9tK14tE5yR9mnsD7xDQ3W/Mv0+7t4XheTIlX4m9c7dl1ImfvV9DMq1eev9mErs0v0Ny0qPpsxVUlOx3Hcz32vypmiWX9jUuLeOY/dH47uoDtlLQAAAAASUVORK5CYII="/>
+                            </defs>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

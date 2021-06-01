@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/media.css') }}">
+</head>
+<body>
+<div class="limiter">
+    <div class="container container-login">
+        <div class="wrap-login">
+            <div class="bg-img" style="background-image: url({{ asset('assets/image/bg.jpg') }});">
+            </div>
+
+            <form class="login" method="post">
+                <div class="login-form">
+                    <p class="title">Welcome back</p>
+                    <div class="login-mail">
+                        <p>Email</p>
+                        <input placeholder="Email" tabindex="1" name="email" type="text" value="{{ last_username }}" required>
+                    </div>
+                    <div class="login-password">
+                        <p>Password</p>
+                        <input  tabindex="2" name="password" type="password" required>
+                    </div>
+                    <div class="login-help">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="login-help">
+                        <div class="login-remember">
+                            <input tabindex="3" type="checkbox" name="_remember_me" value="male" checked> Запомнить меня
+                        </div>
+{#                        <a href="#" class="login-forget">Forgot password?</a>#}
+                    </div>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+                    <div class="login-btn">
+                        <button class="form-btn">Login now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
