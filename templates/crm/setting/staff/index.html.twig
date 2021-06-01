@@ -52,7 +52,11 @@
                         </div>
                         <div class="option-info-user">
                             <p class="option-user-name">{{ user.surname }} {{ user.name }}</p>
-                            <p class="option-user-position">{{ user.position.title }}</p>
+                            {% if user.position.title is defined %}
+                                <p class="option-user-position">{{ user.position.title }}</p>
+                            {% else %}
+                                <p class="option-user-position">Без должности</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
