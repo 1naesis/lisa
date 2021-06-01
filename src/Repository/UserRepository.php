@@ -72,7 +72,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     public function setCreateUser(User $user): object
     {
         $user->setEmployedAtValue();
-        $user->setRoles(['ROLE_STAFF']);
+        $user->setRoles([$user::ROLE_STAFF]);
         $this->manager->persist($user);
         $this->manager->flush();
         return $user;

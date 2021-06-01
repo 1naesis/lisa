@@ -478,7 +478,9 @@ a{
     text-transform: capitalize;
     color: var(--color-1-main);
 }
-
+.options-block{
+    padding-bottom: 40px;
+}
 .staff-option-block{
     background: var(--color-1-main);
     border: 1px solid var(--color-3-main);

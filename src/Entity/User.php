@@ -4,13 +4,17 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @method string getUserIdentifier()
  */
 class User implements UserInterface
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_STAFF = 'ROLE_STAFF';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -114,7 +118,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -272,5 +276,11 @@ class User implements UserInterface
         $this->fired_at = $fired_at;
 
         return $this;
+    }
+
+    #[Pure]
+    public function __call(string $name, array $arguments):string
+    {
+        return $this->getUsername();
     }
 }

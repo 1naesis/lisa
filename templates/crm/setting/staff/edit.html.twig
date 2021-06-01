@@ -33,7 +33,6 @@
     <p class="table-row-title">Расчет ЗП</p>
 </div>
 <div class="edit-staff-wrapper">
-{#    {{ dump(user) }}#}
     {{ form_start(form_user, {attr:{'class':'main-info-edit-staff', 'id':'table-content-1'}}) }}
         <div class="edit-staff-place">
             <div class="inputs-edit-staff">
@@ -119,7 +118,7 @@
         </div>
         <div class="photo-loader">
             <div class="preview-image-staff">
-                {% if user.avatar is not empty %}
+                {% if staff > 0 and user.avatar is not empty %}
                     <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="">
                 {% else %}
                     <img src="{{ asset('assets/image/def-load-person.png') }}" alt="">
