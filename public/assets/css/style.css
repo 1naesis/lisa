@@ -576,6 +576,7 @@ a{
 }
 .table-row-title{
     cursor: pointer;
+    color: var(--color-4-main);
 }
 .table-row-title.active-table{
     color: var(--color-2-main);
@@ -587,7 +588,7 @@ a{
 .edit-staff-place{
     background: #FFFFFF;
     border: 1px solid var(--color-3-main);
-    padding: 17px 43px 29px;
+    padding: 29px 43px 29px;
     width: 100%;
 }
 .main-info-edit-staff{
@@ -764,4 +765,119 @@ a{
     justify-content: space-between;
     margin-top: 93px;
 }
+
+
+/*company*/
+.cat-setting{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Roboto;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+}
+.cat-setting:first-child{
+    margin-top: 0;
+}
+.company-option-block{
+    background: var(--color-1-main);
+    border: 1px solid var(--color-3-main);
+    margin-bottom: 20px;
+    padding: 15px 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.company-option-block:hover {
+    background: var(--color-3-main);
+}
+.company-option-content{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+.image-company{
+    position: relative;
+    bottom: 2px;
+}
+.title-company{
+    font-family: Roboto;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    font-variant: small-caps;
+    margin-left: 25px;
+    color: #000000;
+}
+.description-company{
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 15px;
+    text-transform: lowercase;
+    color: #000000;
+    margin-left: 280px;
+    position: absolute;
+    width: 100%;
+}
+.edit-company-place{
+    background: #FFFFFF;
+    border: 1px solid var(--color-3-main);
+    padding: 24px 43px 29px;
+    width: 100%;
+}
+.field-company{
+    display: flex;
+}
+.field-company-timetable{
+    display: flex;
+    justify-content: center;
+}
+.input-company-field-timetable{
+    display: inline-block;
+    cursor: pointer;
+}
+.input-company-field-timetable>input{
+    pointer-events: none;
+}
+.title-company-field{
+    width: 100px;
+    margin-bottom: 29px;
+}
+.title-company-field>p{
+    font-family: Roboto;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    font-variant: small-caps;
+    color: #000000;
+}
+.input-company-field-block{
+    width: 100%;
+    margin-left: 39px;
+}
+.input-company-field-block-timetable{
+    margin-left: 39px;
+}
+.input-company-field{
+    background: #FFFFFF;
+    border: 1px solid var(--color-3-main);
+    box-sizing: border-box;
+    border-radius: 3px;
+    height: 30px;
+    resize: none;
+    padding: 2px 4px;
+    outline: none;
+    width: 100%;
+}
+.input-company-field-block>textarea{
+    height: 60px;
+}
+.btns-edit-company{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 93px;
+}
+
 /* end setting */

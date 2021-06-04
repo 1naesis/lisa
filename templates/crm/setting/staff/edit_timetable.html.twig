@@ -1,0 +1,40 @@
+{% extends 'crm/base.html.twig' %}
+{% block context %}
+<div class="top-line">
+    <div class="breadcrumb">
+        <p class="top-line-title">
+            <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
+            <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </p>
+        <a href="{{ path('lk/setting/staff') }}"><p class="top-line-next-page">Список cотрудников</p></a>
+        <svg class="breadcrumb-item" width="13" height="12" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="top-line-next-page">
+            {% if staff == 0 %}
+                Новый сотрудник
+            {% else %}
+                {{ user.surname ~ ' ' ~ user.name }}
+            {% endif %}
+        </p>
+    </div>
+    <p class="top-line-date">8 Апрель 2021 18:50</p>
+</div>
+<div class="filter-block">
+    <p class="title-block-title">
+        Редактор сотрудника
+    </p>
+</div>
+<div class="table-title">
+    <a href="{{ path('lk/setting/staff_edit', {'staff': staff}) }}"><p class="table-row-title">Информация</p></a>
+    <a href="{{ path('lk/setting/staff_timetable', {'staff': staff}) }}"><p class="table-row-title active-table">Расписание</p></a>
+    <a href="#"><p class="table-row-title">Расчет ЗП</p></a>
+</div>
+<div class="edit-staff-wrapper">
+    <div class="edit-staff-place">
+        test
+    </div>
+</div>
+{% endblock %}

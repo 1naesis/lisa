@@ -36,3 +36,10 @@ if(document.getElementById('user_avatar')){
             .setAttribute('src', URL.createObjectURL(el.target.files[0]));
     })
 }
+
+let timetables = document.querySelectorAll('.input-company-field-timetable');
+timetables.forEach(el => {
+    el.addEventListener('click', function (){
+        el.querySelector('input').value = '12-42';
+    })
+})

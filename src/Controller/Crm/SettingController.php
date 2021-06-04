@@ -24,6 +24,44 @@ class SettingController extends AbstractController
     }
 
     /**
+     *
+     * STAFF
+     *
+     */
+
+    /**
+     * @Route("/lk/setting/company", name="lk/setting/company")
+     */
+    public function company():Response
+    {
+        return $this->render('crm/setting/company/index.html.twig', [
+
+        ]);
+    }
+
+    /**
+     *
+     * STAFF
+     *
+     */
+
+    /**
+     * @Route("/lk/setting/staff_timetable/{staff<\d+>}", name="lk/setting/staff_timetable")
+     */
+    public function staffTimeEdit(int $staff, UserRepositoryInterface $user_repository):Response
+    {
+        $user = new User();
+        if($staff){
+            $user = $user_repository->getUser($staff);
+        }
+
+        return $this->render('crm/setting/staff/edit_timetable.html.twig', [
+            'staff' => $staff,
+            'user' => $user
+        ]);
+    }
+
+    /**
      * @Route("/lk/setting/staff/{staff<\d+>}", name="lk/setting/staff_edit")
      */
     public function staffEdit(int $staff, Request $request, UserRepositoryInterface $user_repository):Response
@@ -56,6 +94,12 @@ class SettingController extends AbstractController
             'users' => $users
         ]);
     }
+
+    /**
+     *
+     * POSITION
+     *
+     */
 
     /**
      * @Route("/lk/setting/position/{position_id<\d+>}", name="lk/setting/position_edit")

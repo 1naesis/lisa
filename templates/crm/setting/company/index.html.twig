@@ -1,0 +1,156 @@
+{% extends 'crm/base.html.twig' %}
+{% block context %}
+<div class="top-line">
+    <div class="breadcrumb">
+        <p class="top-line-title">
+            <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
+            <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </p>
+        <p class="top-line-next-page">
+            Компания
+        </p>
+    </div>
+    <p class="top-line-date">8 Апрель 2021 18:50</p>
+</div>
+<div class="filter-block">
+    <p class="title-block-title">
+        Настройки компании
+    </p>
+</div>
+<div class="edit-company-wrapper">
+    <div class="edit-company-place">
+        <p class="cat-setting">Основные настройки</p>
+        <div class="field-company">
+            <div class="title-company-field">
+                <p>Название</p>
+            </div>
+            <div class="input-company-field-block">
+                <input type="text" class="input-company-field">
+            </div>
+        </div>
+        <div class="field-company">
+            <div class="title-company-field">
+                <p>Описание</p>
+            </div>
+            <div class="input-company-field-block">
+                <textarea class="input-company-field" name="" id="" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <p class="cat-setting">Время работы</p>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Понедельник</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Вторник</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Среда</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Четверг</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Пятница</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Суббота</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="field-company-timetable">
+            <div class="title-company-field">
+                <p>Воскресенье</p>
+            </div>
+            <div class="input-company-field-block-timetable">
+                <div class="input-company-field-timetable">
+                    <span class="time-start">С</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+                <div class="input-company-field-timetable">
+                    <span class="time-end">До</span>
+                    <input type="text" value="00-00" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="btns-edit-company">
+            <button type="submit" class="btn-success">Сохранить</button>
+        </div>
+        <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+        >
+    </div>
+</div>
+{% endblock %}
