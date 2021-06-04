@@ -736,10 +736,8 @@ a{
 }
 .title-position-field>p{
     font-family: Roboto;
-    font-weight: 600;
     font-size: 16px;
     line-height: 19px;
-    font-variant: small-caps;
     color: #000000;
 }
 .input-position-field-block{
@@ -826,6 +824,7 @@ a{
     border: 1px solid var(--color-3-main);
     padding: 24px 43px 29px;
     width: 100%;
+    position: relative;
 }
 .field-company{
     display: flex;
@@ -836,10 +835,16 @@ a{
 }
 .input-company-field-timetable{
     display: inline-block;
-    cursor: pointer;
+}
+.input-company-field-timetable>span{
+    margin-left: 50px;
+    margin-right: 5px;
 }
 .input-company-field-timetable>input{
-    pointer-events: none;
+    /*pointer-events: none;*/
+    width: 70px;
+    margin-right: 20px;
+    cursor: pointer;
 }
 .title-company-field{
     width: 100px;
@@ -847,10 +852,8 @@ a{
 }
 .title-company-field>p{
     font-family: Roboto;
-    font-weight: 600;
     font-size: 16px;
     line-height: 19px;
-    font-variant: small-caps;
     color: #000000;
 }
 .input-company-field-block{
@@ -879,5 +882,40 @@ a{
     justify-content: space-between;
     margin-top: 93px;
 }
-
+.modal-timetable{
+    position: absolute;
+    z-index: 9999;
+    border: 2px solid var(--color-2-main);
+    background-color: var(--color-1-main);
+    padding: 5px;
+    border-radius: 5px;
+}
+.modal-timetable-title{
+    text-align: center;
+    margin: 5px 0;
+}
+.modal-timetable-wrapper{
+    display: flex;
+}
+.modal-timetable-wrap_block{
+    margin: 0 5px;
+}
+.modal-timetable-wrapper-grid-h{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+.modal-timetable-wrapper-grid-h>p{
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+.modal-timetable-wrapper-grid-m{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.modal-timetable-wrapper-grid-m>p{
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+}
 /* end setting */
