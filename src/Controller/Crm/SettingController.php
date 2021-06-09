@@ -2,6 +2,7 @@
 
 namespace App\Controller\Crm;
 
+use App\Entity\Company;
 use App\Entity\Position;
 use App\Entity\User;
 use App\Form\PositionType;
@@ -32,10 +33,16 @@ class SettingController extends AbstractController
     /**
      * @Route("/lk/setting/company", name="lk/setting/company")
      */
-    public function company():Response
+    public function company(Request $request):Response
     {
-        return $this->render('crm/setting/company/index.html.twig', [
+        $company = new Company();
+        $company_input = $request->request->get('company');
 
+        if ($company_input) {
+            //Валидация и сохранения данных в таблицу Компании
+        }
+        return $this->render('crm/setting/company/index.html.twig', [
+            'company_input' => $company_input
         ]);
     }
 

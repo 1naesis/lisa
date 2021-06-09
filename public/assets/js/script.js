@@ -39,31 +39,47 @@ if(document.getElementById('user_avatar')){
 
 let timetables = document.querySelectorAll('.input-company-field-timetable');
 timetables.forEach(el => {
+    let input = el.querySelector('input');
     el.addEventListener('click', function (e){
         if(document.querySelector('.modal-timetable')){
             document.querySelector('.modal-timetable').remove();
         }
         let timeBlock = document.createElement('div')
+        let [hNow, mNow] = input.value.split('-');
+
+        let hHtml = '';
+        for(let i = 0; i < 24; i ++){
+            if(i == hNow){
+                hHtml += '<p class="active">'+i+'</p>';
+            }else{
+                hHtml += '<p>'+i+'</p>';
+            }
+        }
+        let mHtml = '';
+        for(let i = 0; i < 60; i += 5){
+            let tmp_i = i;
+            if(tmp_i < 10){
+                tmp_i = '0'+ i;
+            }
+            if(i == mNow){
+                mHtml += '<p class="active">'+tmp_i+'</p>';
+            }else{
+                mHtml += '<p>'+tmp_i+'</p>';
+            }
+        }
+
         let html = `
             <div class="modal-timetable-wrapper">
                 <div class="modal-timetable-wrap_block">
                     <p class="modal-timetable-title">Часы</p>
                     <div class="modal-timetable-wrapper-grid modal-timetable-wrapper-grid-h" data-type="h">
-                        <p>0</p><p>1</p><p>2</p><p>3</p>
-                        <p>4</p><p>5</p><p>6</p><p>7</p>
-                        <p>8</p><p>9</p><p>10</p><p>11</p>
-                        <p>12</p><p>13</p><p>14</p><p>15</p>
-                        <p>16</p><p>17</p><p>18</p><p>19</p>
-                        <p>20</p><p>21</p><p>22</p><p>23</p>
+                        ${hHtml}
                     </div>
                 </div>
                 <div class="modal-timetable-wrap_block">
                     <p class="modal-timetable-title">Минуты</p>
                     <div class="modal-timetable-wrapper-grid modal-timetable-wrapper-grid-m" data-type="m">
-                        <p>00</p><p>05</p><p>10</p>
-                        <p>15</p><p>20</p><p>25</p>
-                        <p>30</p><p>35</p><p>40</p>
-                        <p>45</p><p>50</p><p>55</p>
+                        ${mHtml}
                     </div>
                 </div>
             </div>
@@ -72,11 +88,19 @@ timetables.forEach(el => {
         timeBlock.classList.add("modal-timetable");
         document.querySelector('.edit-company-place').append(timeBlock);
         document.body.append(timeBlock);
+        document.body.addEventListener('mousedown', event => {
+            if(event.target !== input){
+                if(!event.target.closest('.modal-timetable')){
+                    timeBlock.remove();
+                }
+            }
+        });
         let offsetLeft = e.clientX - timeBlock.offsetWidth/2;
         let offsetTop = e.clientY - timeBlock.offsetHeight/2;
         timeBlock.style.top = String(offsetTop) + "px";
         timeBlock.style.left = String(offsetLeft) + "px";
-        modelTimeTableListener(el.querySelector('input'));
+        modelTimeTableListener(input);
+
     })
 })
 function modelTimeTableListener(input){
@@ -92,6 +116,15 @@ function modelTimeTableListener(input){
                 tmpValue[1] = value;
             }
             input.value = tmpValue.join('-');
+            modalTimetable.forEach(el_all => {
+                if(el_all === el){
+                    el.classList.add('active');
+                }else{
+                    if (el_all.classList.contains('active') && el_all.closest('.modal-timetable-wrapper-grid-'+type)){
+                        el_all.classList.remove('active');
+                    }
+                }
+            })
         })
     })
 }

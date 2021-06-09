@@ -20,14 +20,16 @@
     </p>
 </div>
 <div class="edit-company-wrapper">
-    <div class="edit-company-place">
+    <form method="post" class="edit-company-place">
+{#    {{ form_start(form_company, {attr:{'class':'edit-company-place'}}) }}#}
         <p class="cat-setting">Основные настройки</p>
         <div class="field-company">
             <div class="title-company-field">
                 <p>Название</p>
             </div>
             <div class="input-company-field-block">
-                <input type="text" class="input-company-field">
+{#                {{ form_widget(form_company.title, {attr:{'class': 'input-company-field'}}) }}#}
+                <input type="text" name="company[title]" class="input-company-field" value="{{ company_input.title??'' }}">
             </div>
         </div>
         <div class="field-company">
@@ -35,7 +37,12 @@
                 <p>Описание</p>
             </div>
             <div class="input-company-field-block">
-                <textarea class="input-company-field" name="" id="" cols="30" rows="10"></textarea>
+                <textarea class="input-company-field" name="company[description]" id="" cols="30" rows="10">{{ company_input.description??'' }}</textarea>
+{#                {{ form_widget(form_company.description, {attr:{#}
+{#                    'class': 'input-company-field',#}
+{#                    'cols': 30,#}
+{#                    'rows': 10#}
+{#                }}) }}#}
             </div>
         </div>
         <p class="cat-setting">Время работы</p>
@@ -46,11 +53,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][0][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][0][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -61,11 +68,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][1][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][1][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -76,11 +83,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][2][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][2][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -91,11 +98,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][3][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][3][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -106,11 +113,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][4][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][4][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -121,11 +128,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][5][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][5][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -136,11 +143,11 @@
             <div class="input-company-field-block-timetable">
                 <div class="input-company-field-timetable">
                     <span class="time-start">С</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][6][start]" value="0-00">
                 </div>
                 <div class="input-company-field-timetable">
                     <span class="time-end">До</span>
-                    <input type="text" value="00-00" disabled>
+                    <input type="text" name="company[timetable][6][end]" value="0-00">
                 </div>
             </div>
         </div>
@@ -151,6 +158,7 @@
         <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
         >
-    </div>
+    </form>
+{#    {{ form_end(form_company) }}#}
 </div>
 {% endblock %}

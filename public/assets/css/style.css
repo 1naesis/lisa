@@ -908,6 +908,11 @@ a{
     width: 25px;
     text-align: center;
     cursor: pointer;
+    border: 1px solid var(--color-1-main);
+    border-radius: 3px;
+}
+.modal-timetable-wrapper-grid-h>p.active{
+    border: 1px solid var(--color-2-main);
 }
 .modal-timetable-wrapper-grid-m{
     display: grid;
@@ -917,5 +922,10 @@ a{
     width: 25px;
     text-align: center;
     cursor: pointer;
+    border: 1px solid var(--color-1-main);
+    border-radius: 3px;
+}
+.modal-timetable-wrapper-grid-m>p.active{
+    border: 1px solid var(--color-2-main);
 }
 /* end setting */
