@@ -26,6 +26,44 @@ a{
     color: none;
 }
 
+/* calendar */
+#calendar-user-timetable {
+    width: 100%;
+    font: monospace;
+    line-height: 1.2em;
+    font-size: 15px;
+    text-align: center;
+}
+#calendar-user-timetable thead tr:last-child {
+    font-size: small;
+    color: rgb(85, 85, 85);
+}
+#calendar-user-timetable thead tr:nth-child(1) td:nth-child(2) {
+    color: rgb(50, 50, 50);
+}
+#calendar-user-timetable thead tr:nth-child(1) td:nth-child(1):hover, #calendar-user-timetable thead tr:nth-child(1) td:nth-child(3):hover {
+    cursor: pointer;
+}
+#calendar-user-timetable tbody td {
+    color: rgb(44, 86, 122);
+}
+#calendar-user-timetable tbody td.today {
+    background: rgb(220, 0, 0);
+    color: #fff;
+}
+
+#calendar-user-timetable{
+    border-collapse: collapse;
+}
+.cell-user-timetable{
+    padding: 4px;
+    height: 40px;
+    border: 1px solid var(--color-2-main);
+    vertical-align: top;
+    cursor: pointer;
+}
+/* end calendar */
+
 /* login */
 
 .container-login{
@@ -522,10 +560,16 @@ a{
     width: 44px;
 }
 .option-block-status-identification{
-    background: #61C727;
     border-radius: 1px;
     margin-left: 20px;
     padding: 1px 11px;
+    min-width: 102px;
+}
+.option-block-status-identification-green{
+    background: #61C727;
+}
+.option-block-status-identification-red{
+    background: #ff6f00;
 }
 .option-block-status-text{
     font-family: Roboto;
@@ -929,3 +973,14 @@ a{
     border: 1px solid var(--color-2-main);
 }
 /* end setting */
+
+/*user-timetable*/
+.edit-user-wrapper{
+    margin-bottom: 20px;
+}
+.reset-timetable-field{
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+}
+/* end user-timetable */

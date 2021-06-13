@@ -14,6 +14,12 @@ interface PositionRepositoryInterface
      * @return Position[]
      */
     public function getAllPosition():array;
+    /**
+     *
+     * @param int $company_id
+     * @return Position[]
+     */
+    public function getPositionByCompany(int $company_id):array;
 
     /**
      * @param int $position_id

@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,6 +14,7 @@ class User implements UserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_STAFF = 'ROLE_STAFF';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -83,6 +83,18 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $fired_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $company_id;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $timetable = [];
+
+    private static ?array $companyTimetable;
 
     public function getId(): ?int
     {
@@ -278,9 +290,66 @@ class User implements UserInterface
         return $this;
     }
 
-    #[Pure]
     public function __call(string $name, array $arguments):string
     {
         return $this->getUsername();
+    }
+
+    public function getCompanyId(): ?int
+    {
+        return $this->company_id;
+    }
+
+    public function setCompanyId(int $company_id): self
+    {
+        $this->company_id = $company_id;
+
+        return $this;
+    }
+
+    public function getTimetable(): ?array
+    {
+        return $this->timetable;
+    }
+
+    public function setTimetable(array $timetable): self
+    {
+        $this->timetable = $timetable;
+
+        return $this;
+    }
+
+    public  function setCompanyTimetable(Company $company):void
+    {
+        self::$companyTimetable = $company->getTimetable();
+    }
+    public function getWorkStatus()
+    {
+        if (!isset(self::$companyTimetable)) {
+            throw new \Exception("В модель не загружено расписание компании");
+        }
+        $nowTime = new \DateTimeImmutable();
+        list($nowW, $nowH, $nowM) = explode('-', $nowTime->format('w-G-i'));
+        $userTimetable = $this->getTimetable();
+        if (isset($userTimetable[$nowW])) {
+            list($start, $end) = $userTimetable[$nowW];
+        } else {
+            list($start, $end) = self::$companyTimetable[$nowW];
+        }
+        if ($start == $end) {
+            return 0;
+        }
+        list($hStart, $mStart) = explode('-', $start);
+        list($hEnd, $mEnd) = explode('-', $end);
+        if ($hStart <= $nowH && $nowH <= $hEnd) {
+            if (
+                ($hStart == $nowH && $nowM < $mStart) &&
+                ($hEnd == $nowH && $nowM >= $mEnd)
+            ) {
+                return 0;
+            }
+            return 1;
+        }
+        return 0;
     }
 }

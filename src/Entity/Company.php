@@ -32,6 +32,11 @@ class Company
      */
     private $timetable = [];
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $user_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Company
     public function setTimetable(array $timetable): self
     {
         $this->timetable = $timetable;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

@@ -128,3 +128,12 @@ function modelTimeTableListener(input){
         })
     })
 }
+
+const resetTimetables = document.querySelectorAll('.reset-timetable-field');
+resetTimetables.forEach(el => {
+    el.addEventListener('click', function (){
+        const parent = el.closest('.field-company-timetable')
+        parent.querySelector('.input-company-field-timetable-start input').value = el.getAttribute('data-start');
+        parent.querySelector('.input-company-field-timetable-end input').value = el.getAttribute('data-end');
+    });
+});

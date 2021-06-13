@@ -29,8 +29,10 @@
 </div>
 <div class="table-title">
     <a href="{{ path('lk/setting/staff_edit', {'staff': staff}) }}"><p class="table-row-title active-table">Информация</p></a>
+    {% if staff > 0 %}
     <a href="{{ path('lk/setting/staff_timetable', {'staff': staff}) }}"><p class="table-row-title">Расписание</p></a>
-    <a href="#"><p class="table-row-title">Расчет ЗП</p></a>
+{#    <a href="#"><p class="table-row-title">Расчет ЗП</p></a>#}
+    {% endif %}
 </div>
 <div class="edit-staff-wrapper">
     {{ form_start(form_user, {attr:{'class':'main-info-edit-staff', 'id':'table-content-1'}}) }}

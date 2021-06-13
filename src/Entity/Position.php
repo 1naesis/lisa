@@ -27,6 +27,11 @@ class Position
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $company_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Position
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCompanyId(): ?int
+    {
+        return $this->company_id;
+    }
+
+    public function setCompanyId(int $company_id): self
+    {
+        $this->company_id = $company_id;
 
         return $this;
     }

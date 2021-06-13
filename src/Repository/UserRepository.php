@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Company;
 use App\Entity\User;
 use App\Service\FileManager\FIleManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,9 +42,14 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         return parent::findAll();
     }
 
-    public function getUser(int $user_id): object
+    public function getUser(int $user_id): ?object
     {
-        return parent::find($user_id);
+        return parent::find($user_id)??null;
+    }
+
+    public function getUserByCompany(int $company_id): array
+    {
+        return parent::findBy(['company_id' => $company_id]);
     }
 
     public function insertFormUser(User $user, FormInterface $form): object
@@ -69,10 +75,25 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         }
     }
 
+    public function setTimetable(User $user, Company $company, array $timetable): void
+    {
+        $companyTimetable = $company->getTimetable();
+        $tmp = [];
+        foreach ($companyTimetable as $day => $cTimetable) {
+            if ($cTimetable[0] != $timetable[$day]['start'] || $cTimetable[1] != $timetable[$day]['end']) {
+                $tmp[$day] = [$timetable[$day]['start'], $timetable[$day]['end']];
+            }
+        }
+        $user->setTimetable($tmp);
+        $this->manager->persist($user);
+        $this->manager->flush();
+    }
+
     public function setCreateUser(User $user): object
     {
         $user->setEmployedAtValue();
         $user->setRoles([$user::ROLE_STAFF]);
+        $user->setTimetable([]);
         $this->manager->persist($user);
         $this->manager->flush();
         return $user;

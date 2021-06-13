@@ -7,20 +7,21 @@ use App\Entity\Position;
 use App\Entity\User;
 use App\Form\PositionType;
 use App\Form\UserType;
+use App\Repository\CompanyRepository;
 use App\Repository\PositionRepositoryInterface;
 use App\Repository\UserRepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SettingController extends AbstractController
+class SettingController extends BasicController
 {
     /**
      * @Route("/lk/setting", name="lk/setting")
      */
     public function index(): Response
     {
+
         return $this->render('crm/setting/index.html.twig', []);
     }
 
@@ -33,16 +34,27 @@ class SettingController extends AbstractController
     /**
      * @Route("/lk/setting/company", name="lk/setting/company")
      */
-    public function company(Request $request):Response
+    public function company(Request $request, CompanyRepository $companyRepository):Response
     {
-        $company = new Company();
-        $company_input = $request->request->get('company');
+        if (!$this->security->isGranted(User::ROLE_ADMIN)) {
+            return $this->redirectToRoute('lk/setting');
+        }
+        $user_this = $this->getThisUser();
+        $company = $this->getThisCompany();
+        if (!$company) {
+            $company = new Company();
+        }
 
-        if ($company_input) {
-            //Валидация и сохранения данных в таблицу Компании
+
+        $company_input = $request->request->get('company');
+        if ($company_input && $companyRepository->validation($company_input)) {
+            $company_input['user'] = $user_this->getId();
+            $companyRepository->setData($company, $company_input);
+            $companyRepository->insertCompany($company);
         }
         return $this->render('crm/setting/company/index.html.twig', [
-            'company_input' => $company_input
+            'company_input' => $company_input,
+            'company' => $company
         ]);
     }
 
@@ -53,18 +65,31 @@ class SettingController extends AbstractController
      */
 
     /**
-     * @Route("/lk/setting/staff_timetable/{staff<\d+>}", name="lk/setting/staff_timetable")
+     * @Route("/lk/setting/staff_timetable/{staff<\d+>?0}", name="lk/setting/staff_timetable")
      */
-    public function staffTimeEdit(int $staff, UserRepositoryInterface $user_repository):Response
+    public function staffTimeEdit
+    (
+        int $staff,
+        UserRepositoryInterface $user_repository,
+        CompanyRepository $companyRepository,
+        Request $request
+    ):Response
     {
-        $user = new User();
-        if($staff){
-            $user = $user_repository->getUser($staff);
+        $timetable = $request->request->get('timetable');
+        $user = $user_repository->getUser($staff);
+        if (!$user || $user->getId() == 0) {
+            return $this->redirectToRoute('lk/setting/staff');
         }
-
+        $company = $companyRepository->getCompanyById($user->getCompanyId());
+        if ($timetable) {
+            $user_repository->setTimetable($user, $company, $timetable);
+            return $this->redirectToRoute('lk/setting/staff');
+        }
         return $this->render('crm/setting/staff/edit_timetable.html.twig', [
             'staff' => $staff,
-            'user' => $user
+            'user' => $user,
+            'company' => $company,
+            'timetable' => $timetable
         ]);
     }
 
@@ -73,13 +98,19 @@ class SettingController extends AbstractController
      */
     public function staffEdit(int $staff, Request $request, UserRepositoryInterface $user_repository):Response
     {
+        $user_this = $this->getUser();
+
         $user = new User();
         if($staff){
             $user = $user_repository->getUser($staff);
+            if (!$user) {
+                return $this->redirectToRoute('lk/setting/staff');
+            }
         }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $user->setCompanyId($user_this->getCompanyId());
             $user_repository->insertFormUser($user, $form);
             return $this->redirectToRoute('lk/setting/staff');
         }
@@ -94,9 +125,15 @@ class SettingController extends AbstractController
     /**
      * @Route("/lk/setting/staff", name="lk/setting/staff")
      */
-    public function staff(UserRepositoryInterface $user):Response
+    public function staff(UserRepositoryInterface $userRepository):Response
     {
-        $users = $user->getAllUser();
+        $user = $this->getUser();
+        $company = $this->getThisCompany();
+        if (!$user) {
+            $user = new User();
+        }
+        $user->setCompanyTimetable($company);
+        $users = $userRepository->getUserByCompany($user->getCompanyId());
         return $this->render('crm/setting/staff/index.html.twig', [
             'users' => $users
         ]);
@@ -113,6 +150,7 @@ class SettingController extends AbstractController
      */
     public function positionEdit(int $position_id, Request $request, PositionRepositoryInterface $position_repository):Response
     {
+        $user_this = $this->getUser();
         $position = new Position();
         if($position_id){
             $position = $position_repository->getPosition($position_id);
@@ -120,6 +158,7 @@ class SettingController extends AbstractController
         $form = $this->createForm(PositionType::class, $position);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $position->setCompanyId($user_this->getCompanyId());
             $position_repository->insertFormPosition($position);
             return $this->redirectToRoute('lk/setting/position');
         }
@@ -135,7 +174,8 @@ class SettingController extends AbstractController
      */
     public function position(PositionRepositoryInterface $position_repository):Response
     {
-        $positions = $position_repository->getAllPosition();
+        $user_this = $this->getUser();
+        $positions = $position_repository->getPositionByCompany($user_this->getId());
         return $this->render('crm/setting/position/index.html.twig', [
             'positions' => $positions
         ]);

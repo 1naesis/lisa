@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PositionRepository extends ServiceEntityRepository implements PositionRepositoryInterface
 {
-    private $manager;
+    private EntityManagerInterface $manager;
 
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
@@ -25,6 +25,11 @@ class PositionRepository extends ServiceEntityRepository implements PositionRepo
     public function getAllPosition(): array
     {
         return parent::findAll();
+    }
+
+    public function getPositionByCompany(int $company_id): array
+    {
+        return parent::findBy(['company_id' => $company_id]);
     }
 
     public function getPosition(int $position_id): object
