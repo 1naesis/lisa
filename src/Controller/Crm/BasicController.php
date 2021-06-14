@@ -23,7 +23,7 @@ class BasicController extends AbstractController
         $this->companyRepository = $companyRepository;
     }
 
-    protected function getThisUser(): ?UserInterface
+    public function getThisUser(): ?UserInterface
     {
         if (!isset($this->user)) {
             $user = $this->getUser();
@@ -35,7 +35,7 @@ class BasicController extends AbstractController
         return $this->user??null;
     }
 
-    protected function getThisCompany(): ?Company
+    public function getThisCompany(): ?Company
     {
         if (!isset($this->company)) {
             $user = $this->getThisUser();

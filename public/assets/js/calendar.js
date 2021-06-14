@@ -51,13 +51,14 @@ function eventClick(){
         })
     })
 }
+if(document.getElementById('calendar-user-timetable')){
+    calendarUserTimetable("calendar-user-timetable", new Date().getFullYear(), new Date().getMonth());
 
-calendarUserTimetable("calendar-user-timetable", new Date().getFullYear(), new Date().getMonth());
+    document.querySelector('#calendar-user-timetable thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
+        calendarUserTimetable("calendar-user-timetable", document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.month)-1);
+    }
 
-document.querySelector('#calendar-user-timetable thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
-    calendarUserTimetable("calendar-user-timetable", document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.month)-1);
-}
-
-document.querySelector('#calendar-user-timetable thead tr:nth-child(1) td:nth-child(3)').onclick = function() {
-    calendarUserTimetable("calendar-user-timetable", document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.month)+1);
+    document.querySelector('#calendar-user-timetable thead tr:nth-child(1) td:nth-child(3)').onclick = function() {
+        calendarUserTimetable("calendar-user-timetable", document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar-user-timetable thead td:nth-child(2)').dataset.month)+1);
+    }
 }
