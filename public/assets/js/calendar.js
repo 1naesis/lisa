@@ -28,7 +28,30 @@ function calendarUserTimetable(id, year, month) {
     if (document.querySelectorAll('#'+id+' tbody tr').length < 6) {
         document.querySelector('#'+id+' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
     }
+    eventClick();
 }
+
+function eventClick(){
+    const cellTimetable = document.querySelectorAll('.cell-user-timetable');
+    cellTimetable.forEach(el => {
+        el.addEventListener('click', function (){
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/lk/modal/calendar-user-timetable/1');
+            xhr.onreadystatechange = function (){
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    try {
+                        let response = JSON.parse(xhr.responseText);
+                        console.log(response);
+                    } catch (e) {
+                        console.log("Незвестная ошибка");
+                    }
+                }
+            };
+            xhr.send();
+        })
+    })
+}
+
 calendarUserTimetable("calendar-user-timetable", new Date().getFullYear(), new Date().getMonth());
 
 document.querySelector('#calendar-user-timetable thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
