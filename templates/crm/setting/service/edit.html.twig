@@ -8,15 +8,19 @@
                 <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
             </svg>
         </p>
-        <a href="{{ path('lk/setting/position') }}"><p class="top-line-next-page">Список должностей</p></a>
+        <a href="{{ path('lk/setting/category-services') }}"><p class="top-line-next-page">Категории услуг</p></a>
+        <svg class="breadcrumb-item" width="13" height="12" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <a href="{{ path('lk/setting/services') }}"><p class="top-line-next-page">Список услуг</p></a>
         <svg class="breadcrumb-item" width="13" height="12" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round"/>
         </svg>
         <p class="top-line-next-page">
-            {% if position_id == 0 %}
-                Новая должность
+            {% if service.id > 0 %}
+                {{ service.title }}
             {% else %}
-                {{ position.title }}
+                Новая услуга
             {% endif %}
         </p>
     </div>
@@ -24,31 +28,31 @@
 </div>
 <div class="filter-block">
     <p class="title-block-title">
-        Редактор должностей
+        Редактор услуг
     </p>
 </div>
 <div class="edit-position-wrapper">
-    {{ form_start(form_position, {attr:{'class':'edit-position-place'}}) }}
+    <form method="post" class="edit-position-place">
         <div class="field-position">
             <div class="title-position-field">
                 <p>Название</p>
             </div>
             <div class="input-position-field-block">
-                {{ form_widget(form_position.title, {attr:{'class':'input-position-field'}}) }}
+                <input class="input-position-field" name="service[title]" type="text" value="{{ data.title??service.title }}">
             </div>
         </div>
         <div class="field-position">
-            <div class="title-position-field">
-                <p>Описание</p>
-            </div>
-            <div class="input-position-field-block">
-                {{ form_widget(form_position.description, {attr:{
-                    'class':'input-position-field',
-                    'cols':'30',
-                    'rows':'10'
-                }})
-                }}
-            </div>
+            <label class="title-position-field" for="user_position"><p>Должность</p></label>
+            <select name="service[category_id]" class="input-services-field-block">
+                <option value="0" selected="selected">Без категории</option>
+                {% for category in categories %}
+                    {% if service.categoryId == category.id or data and data.category_id == category.id  %}
+                        <option value="{{ category.id }}" selected="selected">{{ category.title }}</option>
+                    {% else %}
+                        <option value="{{ category.id }}">{{ category.title }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
         </div>
         <div class="btns-edit-position">
             <button type="submit" class="btn-success">Сохранить</button>
@@ -74,6 +78,6 @@
         <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
         >
-    {{ form_end(form_position) }}
+    </form>
 </div>
 {% endblock %}

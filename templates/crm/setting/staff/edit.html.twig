@@ -97,25 +97,25 @@
                 {{ form_widget(form_user.save, {label:'Сохранить', attr:{'class':'btn-success'}}) }}
 {#                <button type="submit" class="btn-success">Сохранить</button>#}
 
-                {% if staff != 0 %}
-                    <button class="btn-delete">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
-                                <rect width="20" height="20" fill="url(#pattern0)"/>
-                            </mask>
-                            <g mask="url(#mask0)">
-                                <rect width="20" height="20" fill="#966B59"/>
-                            </g>
-                            <defs>
-                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                    <use xlink:href="#image0" transform="scale(0.01)"/>
-                                </pattern>
-                                <image id="image0" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAACQ0lEQVR4nO3dUU4TQQCH8U+T9g4o3Ed80EuYCIHjiTcQGwWuUKPyoI+Wd3xoSdiVxsLO7P63/X7JJDRZJjvzpe22D12QJGn7TIFTYAbcALcdxw3wGThZza1HeAFc0T3CunEJ7PW2mpGbUjfG3bgAJj2tadROqR/jbhz3tKZRm9HctA/AywLz7gNnrbnPC8y79RY0N22/4NwHrbn/FJy7iGdDn8ADbluPS59j7fk7eT70CajJIGEMEqZLkNfAnPKXom1jm38OHG6wfw/q8ob2neVVi/51zROvDn3JCtMlyHuWT081zYF3T/3nktfg0df3FVRZry9ZYQwSxiBhDBLGIGEMEsYgYQwSxiBhEoO8BX4Dv4A3AceP1v++5t7U9b05fgYcv06p9TYkfpf12HlqH197nobEl6ydZpAwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJkxjk272/N7kdRu3jR6vUbxAeAj9W41XA8evszG8ujoW/ubgLDBLGIGEMEsYgYQwSxiBhSgZZtB6XvDF9mvYtZ9trjzCj+cn1jO2McgB8pLnW80HPaI0Tyt95eSzjqMD+FTcFLhl+c/oeX4BJgf2rYg+4YPhN6mt8Xa052gQ4Bj6xfLMbetNKj8VqbUcEPzMkSbvnL8Lz6ZTnu9aZAAAAAElFTkSuQmCC"/>
-                            </defs>
-                        </svg>
-                        Удалить
-                    </button>
-                {% endif %}
+{#                {% if staff != 0 %}#}
+{#                    <button class="btn-delete">#}
+{#                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">#}
+{#                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">#}
+{#                                <rect width="20" height="20" fill="url(#pattern0)"/>#}
+{#                            </mask>#}
+{#                            <g mask="url(#mask0)">#}
+{#                                <rect width="20" height="20" fill="#966B59"/>#}
+{#                            </g>#}
+{#                            <defs>#}
+{#                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">#}
+{#                                    <use xlink:href="#image0" transform="scale(0.01)"/>#}
+{#                                </pattern>#}
+{#                                <image id="image0" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAACQ0lEQVR4nO3dUU4TQQCH8U+T9g4o3Ed80EuYCIHjiTcQGwWuUKPyoI+Wd3xoSdiVxsLO7P63/X7JJDRZJjvzpe22D12QJGn7TIFTYAbcALcdxw3wGThZza1HeAFc0T3CunEJ7PW2mpGbUjfG3bgAJj2tadROqR/jbhz3tKZRm9HctA/AywLz7gNnrbnPC8y79RY0N22/4NwHrbn/FJy7iGdDn8ADbluPS59j7fk7eT70CajJIGEMEqZLkNfAnPKXom1jm38OHG6wfw/q8ob2neVVi/51zROvDn3JCtMlyHuWT081zYF3T/3nktfg0df3FVRZry9ZYQwSxiBhDBLGIGEMEsYgYQwSxiBhEoO8BX4Dv4A3AceP1v++5t7U9b05fgYcv06p9TYkfpf12HlqH197nobEl6ydZpAwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJY5AwBgljkDAGCWOQMAYJkxjk272/N7kdRu3jR6vUbxAeAj9W41XA8evszG8ujoW/ubgLDBLGIGEMEsYgYQwSxiBhSgZZtB6XvDF9mvYtZ9trjzCj+cn1jO2McgB8pLnW80HPaI0Tyt95eSzjqMD+FTcFLhl+c/oeX4BJgf2rYg+4YPhN6mt8Xa052gQ4Bj6xfLMbetNKj8VqbUcEPzMkSbvnL8Lz6ZTnu9aZAAAAAElFTkSuQmCC"/>#}
+{#                            </defs>#}
+{#                        </svg>#}
+{#                        Удалить#}
+{#                    </button>#}
+{#                {% endif %}#}
             </div>
         </div>
         <div class="photo-loader">

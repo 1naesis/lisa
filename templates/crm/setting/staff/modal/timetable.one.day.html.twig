@@ -1,0 +1,38 @@
+<div class="table-days">
+    <div></div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-week">{{ i }}</div>
+    {% endfor %}
+    <div class="table-day-week">Пн</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+    <div class="table-day-week">Вт</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+    <div class="table-day-week">Ср</div>
+    {% for i in range(0, 23) %}
+        {% if i == 5 %}
+            <div class="table-day-cell"><div class="working-day"></div></div>
+        {% else %}
+            <div class="table-day-cell"><div class="empty-day"></div></div>
+        {% endif %}
+    {% endfor %}
+    <div class="table-day-week">Чт</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+    <div class="table-day-week">Пт</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+    <div class="table-day-week">Сб</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+    <div class="table-day-week">Вс</div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-cell"><div class="empty-day"></div></div>
+    {% endfor %}
+</div>

@@ -2,13 +2,17 @@
 
 namespace App\Controller\Crm;
 
+use App\Entity\Category;
 use App\Entity\Company;
 use App\Entity\Position;
+use App\Entity\Service;
 use App\Entity\User;
 use App\Form\PositionType;
 use App\Form\UserType;
+use App\Repository\CategoryRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\PositionRepositoryInterface;
+use App\Repository\ServiceRepository;
 use App\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +25,112 @@ class SettingController extends BasicController
      */
     public function index(): Response
     {
-
         return $this->render('crm/setting/index.html.twig', []);
     }
 
     /**
      *
-     * STAFF
+     * SERVICES
+     *
+     */
+
+
+
+    /**
+     * @Route("/lk/setting/services/{service_id<\d+>}", name="lk/setting/service_edit")
+     */
+    public function editServices(
+        int $service_id,
+        Request $request,
+        ServiceRepository $serviceRepository,
+        CategoryRepository $categoryRepository
+    ): Response
+    {
+        $company = $this->getThisCompany();
+        if ($service_id) {
+            $service = $serviceRepository->getService($service_id);
+            if (!$service) {
+                return $this->redirectToRoute('lk/setting/services');
+            }
+        } else {
+            $service = new Service();
+        }
+        $categories = $categoryRepository->getCategoriesByCompany($company->getId());
+
+        $data = $request->request->get("service");
+        if ($data && $serviceRepository->validation($data)) {
+            $data['company_id'] = (int)$company->getId();
+            $serviceRepository->setData($service, $data);
+            $serviceRepository->insertService($service);
+            return $this->redirectToRoute('lk/setting/services');
+        }
+        return $this->render('crm/setting/service/edit.html.twig', [
+            'data' => $data,
+            'service' => $service,
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/lk/setting/services", name="lk/setting/services")
+     */
+    public function services(Request $request, ServiceRepository $serviceRepository): Response
+    {
+        $category = $request->get('category')??0;
+        $company = $this->getThisCompany();
+        if ($category > 0) {
+            $services = $serviceRepository->getServicesByCompanyAndCatalog($company->getId(), $category);
+        } else {
+            $services = $serviceRepository->getServicesByCompany($company->getId());
+        }
+        return $this->render('crm/setting/service/index.html.twig', [
+            'services' => $services
+        ]);
+    }
+
+    /**
+     * @Route("/lk/setting/category-services/{category_id<\d+>}", name="lk/setting/category_edit")
+     */
+    public function editCategoriesServices(int $category_id, Request $request, CategoryRepository $categoryRepository): Response
+    {
+        $company = $this->getThisCompany();
+        if ($category_id) {
+            $category = $categoryRepository->getCategory($category_id);
+            if (!$category) {
+                return $this->redirectToRoute('lk/setting/category-services');
+            }
+        } else {
+            $category = new Category();
+        }
+
+        $data = $request->request->get("category");
+        if ($data && $categoryRepository->validation($data)) {
+            $data['company_id'] = (int)$company->getId();
+            $categoryRepository->setData($category, $data);
+            $categoryRepository->insertCategory($category);
+            return $this->redirectToRoute('lk/setting/category-services');
+        }
+        return $this->render('crm/setting/category/edit.html.twig', [
+            'data' => $data,
+            'category' => $category
+        ]);
+    }
+
+    /**
+     * @Route("/lk/setting/category-services", name="lk/setting/category-services")
+     */
+    public function categoriesServices(CategoryRepository $categoryRepository): Response
+    {
+        $company = $this->getThisCompany();
+        $categories = $categoryRepository->getCategoriesByCompany($company->getId());
+        return $this->render('crm/setting/category/index.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     *
+     * COMPANY
      *
      */
 
@@ -154,6 +257,9 @@ class SettingController extends BasicController
         $position = new Position();
         if($position_id){
             $position = $position_repository->getPosition($position_id);
+            if (!$position) {
+                return $this->redirectToRoute('lk/setting/position');
+            }
         }
         $form = $this->createForm(PositionType::class, $position);
         $form->handleRequest($request);

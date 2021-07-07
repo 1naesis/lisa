@@ -23,9 +23,9 @@ interface PositionRepositoryInterface
 
     /**
      * @param int $position_id
-     * @return Position
+     * @return object|null
      */
-    public function getPosition(int $position_id):object;
+    public function getPosition(int $position_id):?object;
 
     /**
      * @param Position $position

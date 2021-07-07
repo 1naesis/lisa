@@ -36,12 +36,20 @@
 <div class="edit-user-wrapper">
     <div  class="edit-company-place">
         <p class="cat-setting">Ручная настройка</p>
-        <table id="calendar-user-timetable">
-            <thead>
-            <tr><td>‹<td colspan="5"><td>›
-            <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-            <tbody>
-        </table>
+        <div class="calendar-and-days-wrapper">
+            <div class="calendar-wrapper">
+                <table id="calendar-user-timetable">
+                    <thead>
+                    <tr class="top-calendar-user"><td class="arrow-calendar-user">‹<td colspan="5"><td class="arrow-calendar-user">›
+                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                    <tbody>
+                </table>
+            </div>
+            <div class="days-wrapper">
+                <p>Загружается таблица...</p>
+{#                Генерируется во вьюшке crm/setting/staff/modal/timetable.one.day.html.twig, через ajax#}
+            </div>
+        </div>
     </div>
 </div>
 <div class="edit-company-wrapper">

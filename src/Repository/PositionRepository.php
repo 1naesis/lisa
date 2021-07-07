@@ -32,9 +32,9 @@ class PositionRepository extends ServiceEntityRepository implements PositionRepo
         return parent::findBy(['company_id' => $company_id]);
     }
 
-    public function getPosition(int $position_id): object
+    public function getPosition(int $position_id): ?object
     {
-        return parent::find($position_id);
+        return parent::find($position_id)??null;
     }
 
     public function insertFormPosition(Position $position): object
