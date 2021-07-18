@@ -8,7 +8,7 @@ function calendaruser(){
     function calendarUserTimetable(id, year, month) {
         selectDate.selectDay = 0;
         selectDate.selectMonth = month+1;
-        selectDate.selectYear = year;
+        selectDate.selectYear = Number(year);
         var Dlast = new Date(year,month+1,0).getDate(),
             D = new Date(year,month,Dlast),
             DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
@@ -43,11 +43,12 @@ function calendaruser(){
     }
 
     function loadTableOneDay(){
-        console.log(selectDate.selectDay + '-' + selectDate.selectMonth + '-' + selectDate.selectYear);
+        // console.log(selectDate.selectDay + '-' + selectDate.selectMonth + '-' + selectDate.selectYear);
         if(selectDate.selectDay){
             let date = selectDate.selectDay + '-' + selectDate.selectMonth + '-' + selectDate.selectYear;
+            let userId = document.getElementById('userId').value;
             let fd = new FormData();
-            fd.append('user_id', 1);
+            fd.append('user_id', userId);
             fd.append('date', date);
             let xhr = new XMLHttpRequest();
             xhr.open('POST', '/lk/modal/calendar-user-timetable');
@@ -57,6 +58,7 @@ function calendaruser(){
                         let response = JSON.parse(xhr.responseText);
                         if (response.code == 200) {
                             document.querySelector('.days-wrapper').innerHTML = response.response;
+                            listenCell();
                         } else {
                             console.log(response);
                         }
@@ -68,6 +70,43 @@ function calendaruser(){
             };
             xhr.send(fd);
         }
+    }
+
+    function listenCell(){
+        let cells = document.querySelectorAll('.table-day-cell');
+        cells.forEach(c => {
+            c.addEventListener('click', cell => {
+                let fd = new FormData();
+                fd.append('date', cell.target.getAttribute('data-date'));
+                fd.append('time', cell.target.getAttribute('data-time'));
+                fd.append('user_id', document.getElementById('userId').value);
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/lk/modal/edit-one-hour');
+                xhr.onreadystatechange = function (){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        try {
+                            let response = JSON.parse(xhr.responseText);
+                            if (response.code == 200) {
+                                switch (response.response) {
+                                    case 1:
+                                        cell.target.querySelector('div').classList.remove("empty-day");
+                                        cell.target.querySelector('div').classList.add("working-day");
+                                        break;
+                                    case 2:
+                                        cell.target.querySelector('div').classList.remove("working-day");
+                                        cell.target.querySelector('div').classList.add("empty-day");
+                                        break;
+                                }
+                            } else {
+                            }
+                        } catch (e) {
+                            console.log("Незвестная ошибка");
+                        }
+                    }
+                }
+                xhr.send(fd);
+            })
+        })
     }
 
     function eventClick(){
@@ -82,12 +121,13 @@ function calendaruser(){
                         cell.classList.remove("selected-cell");
                     }
                 })
-                selectDate.selectDay = el.querySelector('div').innerText;
+                selectDate.selectDay = Number(el.querySelector('div').innerText);
                 changeWeek();
                 loadTableOneDay();
             })
         })
     }
+
     function changeWeek(){
         let findWeek = false;
         if(document.querySelector('#calendar-user-timetable .selected-cell')){

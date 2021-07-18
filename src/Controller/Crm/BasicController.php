@@ -40,7 +40,7 @@ class BasicController extends AbstractController
         if (!isset($this->company)) {
             $user = $this->getThisUser();
             if ($user) {
-                $this->company = $this->companyRepository->getCompanyByUser($user->getId());
+                $this->company = $this->companyRepository->getCompanyByUser($user->getCompanyId());
             }
         }
         return $this->company;

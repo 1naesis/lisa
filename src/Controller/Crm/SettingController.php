@@ -11,6 +11,7 @@ use App\Form\PositionType;
 use App\Form\UserType;
 use App\Repository\CategoryRepository;
 use App\Repository\CompanyRepository;
+use App\Repository\ManualTimetableRepository;
 use App\Repository\PositionRepositoryInterface;
 use App\Repository\ServiceRepository;
 use App\Repository\UserRepositoryInterface;
@@ -228,7 +229,7 @@ class SettingController extends BasicController
     /**
      * @Route("/lk/setting/staff", name="lk/setting/staff")
      */
-    public function staff(UserRepositoryInterface $userRepository):Response
+    public function staff(UserRepositoryInterface $userRepository, ManualTimetableRepository $manualTimetableRepository):Response
     {
         $user = $this->getUser();
         $company = $this->getThisCompany();
@@ -237,6 +238,16 @@ class SettingController extends BasicController
         }
         $user->setCompanyTimetable($company);
         $users = $userRepository->getUserByCompany($user->getCompanyId());
+        foreach ($users as &$user) {
+            $manual = $manualTimetableRepository->
+                findManualTimetableByDateAndUser(
+                    (new \DateTimeImmutable())->setTime(0, 0),
+                    $user->getId()
+                );
+            if ($manual) {
+                $user->setManualTimetable($manual->getTimetable());
+            }
+        }
         return $this->render('crm/setting/staff/index.html.twig', [
             'users' => $users
         ]);
@@ -280,8 +291,9 @@ class SettingController extends BasicController
      */
     public function position(PositionRepositoryInterface $position_repository):Response
     {
-        $user_this = $this->getUser();
-        $positions = $position_repository->getPositionByCompany($user_this->getId());
+        $user = $this->getUser();
+        $company = $this->getThisCompany();
+        $positions = $position_repository->getPositionByCompany($company->getId());
         return $this->render('crm/setting/position/index.html.twig', [
             'positions' => $positions
         ]);

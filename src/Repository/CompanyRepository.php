@@ -31,7 +31,7 @@ class CompanyRepository extends ServiceEntityRepository
 
     public function getCompanyByUser(int $id): ?Company
     {
-        return parent::findOneBy(['user_id' => $id]);
+        return parent::findOneBy(['id' => $id]);
     }
 
     public function validation(array $input): bool

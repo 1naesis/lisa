@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ManualTimetableRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -95,6 +96,24 @@ class User implements UserInterface
     private $timetable = [];
 
     private static ?array $companyTimetable;
+
+    private ?array $manualTimetable = [];
+
+    /**
+     * @return array|null
+     */
+    public function getManualTimetable(): ?array
+    {
+        return $this->manualTimetable;
+    }
+
+    /**
+     * @param array|null $manualTimetable
+     */
+    public function setManualTimetable(?array $manualTimetable): void
+    {
+        $this->manualTimetable = $manualTimetable;
+    }
 
     public function getId(): ?int
     {
@@ -323,6 +342,7 @@ class User implements UserInterface
     {
         self::$companyTimetable = $company->getTimetable();
     }
+
     public function getWorkStatus()
     {
         if (!isset(self::$companyTimetable)) {
@@ -331,6 +351,9 @@ class User implements UserInterface
         $nowTime = new \DateTimeImmutable();
         list($nowW, $nowH, $nowM) = explode('-', $nowTime->format('w-G-i'));
         $userTimetable = $this->getTimetable();
+        if ($this->getManualTimetable() && in_array($nowH, $this->getManualTimetable())) {
+            return 1;
+        }
         if (isset($userTimetable[$nowW])) {
             list($start, $end) = $userTimetable[$nowW];
         } else {

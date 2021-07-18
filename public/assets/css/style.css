@@ -94,7 +94,7 @@ p{
 }
 #calendar-user-timetable tbody td.today {
     /*background: rgb(220, 0, 0);*/
-    /*color: #fff;*/
+    color: #bababa;
 }
 .arrow-calendar-user{
     font-size: 22px;
@@ -106,7 +106,9 @@ p{
     height: 28px;
     cursor: pointer;
 }
-.cell-user-timetable>div{
+.cell-user-timetable>div,
+.empty-day,
+.working-day{
     pointer-events: none;
 }
 

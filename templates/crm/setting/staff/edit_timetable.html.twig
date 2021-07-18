@@ -1,5 +1,7 @@
 {% extends 'crm/base.html.twig' %}
 {% block context %}
+<input type="hidden" id="userId" value="{{ user.id ?? 0 }}">
+
 <div class="top-line">
     <div class="breadcrumb">
         <p class="top-line-title">
