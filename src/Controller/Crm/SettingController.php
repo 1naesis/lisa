@@ -14,6 +14,7 @@ use App\Repository\CompanyRepository;
 use App\Repository\ManualTimetableRepository;
 use App\Repository\PositionRepositoryInterface;
 use App\Repository\ServiceRepository;
+use App\Repository\StaffServiceRepository;
 use App\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,10 @@ class SettingController extends BasicController
      */
     public function index(): Response
     {
-        return $this->render('crm/setting/index.html.twig', []);
+        $activeMenu = 'setting';
+        return $this->render('crm/setting/index.html.twig', [
+            'activeMenu' => $activeMenu
+        ]);
     }
 
     /**
@@ -65,10 +69,13 @@ class SettingController extends BasicController
             $serviceRepository->insertService($service);
             return $this->redirectToRoute('lk/setting/services');
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/service/edit.html.twig', [
             'data' => $data,
             'service' => $service,
-            'categories' => $categories
+            'categories' => $categories,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -84,8 +91,11 @@ class SettingController extends BasicController
         } else {
             $services = $serviceRepository->getServicesByCompany($company->getId());
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/service/index.html.twig', [
-            'services' => $services
+            'services' => $services,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -111,9 +121,12 @@ class SettingController extends BasicController
             $categoryRepository->insertCategory($category);
             return $this->redirectToRoute('lk/setting/category-services');
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/category/edit.html.twig', [
             'data' => $data,
-            'category' => $category
+            'category' => $category,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -124,8 +137,11 @@ class SettingController extends BasicController
     {
         $company = $this->getThisCompany();
         $categories = $categoryRepository->getCategoriesByCompany($company->getId());
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/category/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -156,9 +172,12 @@ class SettingController extends BasicController
             $companyRepository->setData($company, $company_input);
             $companyRepository->insertCompany($company);
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/company/index.html.twig', [
             'company_input' => $company_input,
-            'company' => $company
+            'company' => $company,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -167,6 +186,45 @@ class SettingController extends BasicController
      * STAFF
      *
      */
+
+    /**
+     * @Route("/lk/setting/staff_services/{staff<\d+>?0}", name="lk/setting/staff_services")
+     */
+    public function staffService(
+        int $staff,
+        Request $request,
+        UserRepositoryInterface $user_repository,
+        CompanyRepository $companyRepository,
+        ServiceRepository $serviceRepository,
+        StaffServiceRepository $staffServiceRepository
+    ): Response
+    {
+        $user_this = $this->getUser();
+
+        $user = new User();
+        if($staff){
+            $user = $user_repository->getUser($staff);
+            if (!$user) {
+                return $this->redirectToRoute('lk/setting/staff');
+            }
+        }
+        $services_input = $request->request->get("services");
+        if (isset($services_input) && $staffServiceRepository->validate($services_input)) {
+            $staffServiceRepository->setDate($user, $services_input);
+        }
+        $company = $companyRepository->getCompanyById($user->getCompanyId());
+        $staffServices = $staffServiceRepository->getStaffServicesByUser($user->getId());
+        $services = $serviceRepository->getServicesByCompany($company->getId());
+
+        $activeMenu = 'setting';
+        return $this->render('crm/setting/staff/edit_services.html.twig', [
+            'staff' => $staff,
+            'services' => $services,
+            'user' => $user,
+            'activeMenu' => $activeMenu,
+            'staffServices' => $staffServices
+        ]);
+    }
 
     /**
      * @Route("/lk/setting/staff_timetable/{staff<\d+>?0}", name="lk/setting/staff_timetable")
@@ -187,13 +245,15 @@ class SettingController extends BasicController
         $company = $companyRepository->getCompanyById($user->getCompanyId());
         if ($timetable) {
             $user_repository->setTimetable($user, $company, $timetable);
-            return $this->redirectToRoute('lk/setting/staff');
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/staff/edit_timetable.html.twig', [
             'staff' => $staff,
             'user' => $user,
             'company' => $company,
-            'timetable' => $timetable
+            'timetable' => $timetable,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -216,13 +276,15 @@ class SettingController extends BasicController
         if($form->isSubmitted() && $form->isValid()){
             $user->setCompanyId($user_this->getCompanyId());
             $user_repository->insertFormUser($user, $form);
-            return $this->redirectToRoute('lk/setting/staff');
+//            return $this->redirectToRoute('lk/setting/staff');
         }
 
+        $activeMenu = 'setting';
         return $this->render('crm/setting/staff/edit.html.twig', [
             'staff' => $staff,
             'form_user' => $form->createView(),
             'user' => $user,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -248,9 +310,27 @@ class SettingController extends BasicController
                 $user->setManualTimetable($manual->getTimetable());
             }
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/staff/index.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'activeMenu' => $activeMenu
         ]);
+    }
+
+    /**
+     * @Route("/lk/setting/staff_services_delete", name="lk/setting/staff_services_delete")
+     */
+    public function actionStaffServiceDelete(Request $request, StaffServiceRepository $staffServiceRepository): Response
+    {
+        $user = $this->getUser();
+        $company = $this->getThisCompany();
+        $id = $request->request->get("id");
+        if (!$user || !$company || !$id) {
+            return $this->redirectToRoute("app_login");
+        }
+        $response = $staffServiceRepository->removeById($id);
+        return $this->json(['response' => $response]);
     }
 
     /**
@@ -279,10 +359,13 @@ class SettingController extends BasicController
             $position_repository->insertFormPosition($position);
             return $this->redirectToRoute('lk/setting/position');
         }
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/position/edit.html.twig', [
             'form_position' => $form->createView(),
             'position_id' => $position_id,
-            'position' => $position
+            'position' => $position,
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -294,8 +377,11 @@ class SettingController extends BasicController
         $user = $this->getUser();
         $company = $this->getThisCompany();
         $positions = $position_repository->getPositionByCompany($company->getId());
+
+        $activeMenu = 'setting';
         return $this->render('crm/setting/position/index.html.twig', [
-            'positions' => $positions
+            'positions' => $positions,
+            'activeMenu' => $activeMenu
         ]);
     }
 }

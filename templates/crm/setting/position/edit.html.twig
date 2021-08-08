@@ -1,4 +1,23 @@
 {% extends 'crm/base.html.twig' %}
+{% block breadcrumbs %}
+    <p class="top-line-title">
+    <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
+    <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    </p>
+    <a href="{{ path('lk/setting/position') }}"><p class="top-line-next-page">Список должностей</p></a>
+    <svg class="breadcrumb-item" width="13" height="12" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <p class="top-line-next-page">
+        {% if position_id == 0 %}
+            Новая должность
+        {% else %}
+            {{ position.title }}
+        {% endif %}
+    </p>
+{% endblock %}
 {% block context %}
 <div class="top-line">
     <div class="breadcrumb">
@@ -51,7 +70,7 @@
             </div>
         </div>
         <div class="btns-edit-position">
-            <button type="submit" class="btn-success">Сохранить</button>
+            {{ form_widget(form_position.save, {label:'Сохранить', attr:{'class':'btn-success'}}) }}
 
 {#            <button class="btn-delete">#}
 {#                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">#}

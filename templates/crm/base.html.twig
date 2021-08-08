@@ -12,53 +12,63 @@
 </head>
 <body class="main-wrapper">
 <header class="header">
-    <div class="open-close-menu" onclick="menuOpenClose(this);">
-        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-             viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-            <g>
+    <div class="wrapper-open-close-menu">
+        <div class="open-close-menu" onclick="menuOpenClose(this);">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                 <g>
-                    <path d="M0,61v90h90V61H0z M60,121H30V91h30V121z"/>
+                    <g>
+                        <path d="M0,61v90h90V61H0z M60,121H30V91h30V121z"/>
+                    </g>
                 </g>
-            </g>
-            <g>
                 <g>
-                    <path d="M121,61v90h391V61H121z M482,121H151V91h331V121z"/>
+                    <g>
+                        <path d="M121,61v90h391V61H121z M482,121H151V91h331V121z"/>
+                    </g>
                 </g>
-            </g>
-            <g>
                 <g>
-                    <path d="M0,211v90h90v-90H0z M60,271H30v-30h30V271z"/>
+                    <g>
+                        <path d="M0,211v90h90v-90H0z M60,271H30v-30h30V271z"/>
+                    </g>
                 </g>
-            </g>
-            <g>
                 <g>
-                    <path d="M121,211v90h391v-90H121z M482,271H151v-30h331V271z"/>
+                    <g>
+                        <path d="M121,211v90h391v-90H121z M482,271H151v-30h331V271z"/>
+                    </g>
                 </g>
-            </g>
-            <g>
                 <g>
-                    <path d="M0,361v90h90v-90H0z M60,421H30v-30h30V421z"/>
+                    <g>
+                        <path d="M0,361v90h90v-90H0z M60,421H30v-30h30V421z"/>
+                    </g>
                 </g>
-            </g>
-            <g>
                 <g>
-                    <path d="M121,361v90h391v-90H121z M482,421H151v-30h331V421z"/>
+                    <g>
+                        <path d="M121,361v90h391v-90H121z M482,421H151v-30h331V421z"/>
+                    </g>
                 </g>
-            </g>
             </svg>
+        </div>
     </div>
     <div class="user">
         <div class="user-img">
-            <img src="{{ asset('assets/image/user-photo.png') }}" alt="" class="user-photo">
+            {% if app.user.avatar %}
+                <img src="{{ asset('uploads/user/' ~ app.user.avatar) }}" alt="" class="user-photo">
+            {% else %}
+                <img src="{{ asset('assets/image/user-photo.png') }}" alt="" class="user-photo">
+            {% endif %}
         </div>
         <div class="user-name">
-            <p class="name">Анастасия Парс</p>
+            <p class="name">{{ app.user.name ~ " " ~ app.user.surname }}</p>
         </div>
     </div>
-    <div class="calendar">Календарь</div>
+    <div class="calendar">В разработке</div>
     <nav class="main-menu">
         <a class="menu-link" href="{{ path('lk') }}">
-            <div class="menu-item">
+            <div class="menu-item
+                {% if activeMenu is not defined %}
+                    active-menu
+                {% endif %}
+            ">
                 <svg class="menu-item-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 507.964 507.964" style="enable-background:new 0 0 507.964 507.964;" xml:space="preserve">
                         <g>
@@ -129,7 +139,11 @@
         </a>
 
         <a class="menu-link" href="{{ path('lk/setting') }}">
-            <div class="menu-item active-menu">
+            <div class="menu-item
+                {% if activeMenu is defined and activeMenu == 'setting' %}
+                    active-menu
+                {% endif %}
+            ">
                 <svg class="menu-item-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                         <g>
@@ -157,9 +171,9 @@
                                     c13.988,3.743,27.348,9.265,39.706,16.414c4.719,2.731,10.552,2.685,15.228-0.121l48.535-29.12l25.863,25.863l-29.12,48.533
                                     c-2.806,4.677-2.853,10.508-0.122,15.229c7.146,12.351,12.668,25.71,16.414,39.708c1.419,5.301,5.62,9.405,10.953,10.699
                                     L482,238.795V275.205z"/>
+                                </g>
                             </g>
-                        </g>
-                    <g>
+                        <g>
                         <g>
                             <path d="M255,152c-57.897,0-105,47.103-105,105c0,57.897,47.103,105,105,105c57.897,0,105-47.103,105-105
                                     C360,199.103,312.897,152,255,152z M255,332c-41.355,0-75-33.645-75-75c0-41.355,33.645-75,75-75s75,33.645,75,75
@@ -170,59 +184,76 @@
             </div>
         </a>
 
-        <a class="menu-link" href="{{ path('lk') }}">
-            <div class="menu-item">
-                <svg class="menu-item-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     viewBox="0 0 508 508" style="enable-background:new 0 0 508 508;" xml:space="preserve">
-                        <g>
-                            <g>
-                                <path d="M368.7,221.2c0-40.7-33.1-73.7-73.7-73.7h-82c-40.7,0-73.7,33.1-73.7,73.7v147.5h49.2V508h131.1V368.7h49.2V221.2H368.7z
-                                    M352.4,352.3h-0.1h-32.8V254h-16.4v237.6h-41V376.3h-16.4v115.3h-41V254h-16.4v98.3h-32.8V221.2c0-31.6,25.7-57.4,57.4-57.4H295
-                                    c31.6,0,57.4,25.7,57.4,57.4V352.3z"/>
-                            </g>
-                        </g>
+        <div class="menu-item" onclick="openCloseSabMenu('staff-sub-menu-item');">
+            <svg class="menu-item-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 508 508" style="enable-background:new 0 0 508 508;" xml:space="preserve">
                     <g>
                         <g>
-                            <path d="M254,0c-36.1,0-65.5,29.4-65.5,65.5c0,36.2,29.4,65.6,65.5,65.6c36.1,0,65.5-29.4,65.5-65.5C319.5,29.4,290.1,0,254,0z
-                                    M254,114.8c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2c27.1,0,49.2,22.1,49.2,49.2
-                                    C303.2,92.7,281.1,114.8,254,114.8z"/>
+                            <path d="M368.7,221.2c0-40.7-33.1-73.7-73.7-73.7h-82c-40.7,0-73.7,33.1-73.7,73.7v147.5h49.2V508h131.1V368.7h49.2V221.2H368.7z
+                                M352.4,352.3h-0.1h-32.8V254h-16.4v237.6h-41V376.3h-16.4v115.3h-41V254h-16.4v98.3h-32.8V221.2c0-31.6,25.7-57.4,57.4-57.4H295
+                                c31.6,0,57.4,25.7,57.4,57.4V352.3z"/>
                         </g>
                     </g>
+                <g>
                     <g>
-                        <g>
-                            <path d="M155.8,385v53.4h-0.1c0,11.3-9.2,20.5-20.5,20.5h-20.5v-99H98.3v99H77.8c-11.3,0-20.5-9.2-20.5-20.5V278.6H41V336H16.4
-                                    v-82c0-31.6,25.7-57.4,57.4-57.4h57.4v-16.4H73.7C33.1,180.3,0,213.3,0,254v98.3h41v86c0,20.3,16.5,36.9,36.9,36.9h57.4
-                                    c20.3,0,36.9-16.5,36.9-36.9V385H155.8z"/>
-                        </g>
+                        <path d="M254,0c-36.1,0-65.5,29.4-65.5,65.5c0,36.2,29.4,65.6,65.5,65.6c36.1,0,65.5-29.4,65.5-65.5C319.5,29.4,290.1,0,254,0z
+                                M254,114.8c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2c27.1,0,49.2,22.1,49.2,49.2
+                                C303.2,92.7,281.1,114.8,254,114.8z"/>
                     </g>
+                </g>
+                <g>
                     <g>
-                        <g>
-                            <path d="M106.5,32.9C70.4,32.8,41,62.2,41,98.3c0,36.2,29.4,65.6,65.5,65.6c36.1,0,65.5-29.4,65.5-65.5
-                                    C172,62.3,142.6,32.9,106.5,32.9z M106.5,147.6c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2
-                                    c27.1,0,49.2,22.1,49.2,49.2C155.7,125.5,133.6,147.6,106.5,147.6z"/>
-                        </g>
+                        <path d="M155.8,385v53.4h-0.1c0,11.3-9.2,20.5-20.5,20.5h-20.5v-99H98.3v99H77.8c-11.3,0-20.5-9.2-20.5-20.5V278.6H41V336H16.4
+                                v-82c0-31.6,25.7-57.4,57.4-57.4h57.4v-16.4H73.7C33.1,180.3,0,213.3,0,254v98.3h41v86c0,20.3,16.5,36.9,36.9,36.9h57.4
+                                c20.3,0,36.9-16.5,36.9-36.9V385H155.8z"/>
                     </g>
+                </g>
+                <g>
                     <g>
-                        <g>
-                            <path d="M434.3,180.3h-57.4v16.4h57.4c31.6,0,57.4,25.7,57.4,57.4V336H467v-57.4h-16.4v159.8c0,11.3-9.2,20.5-20.5,20.5h-20.5v-99
-                                    h-16.4v99h-20.5c-11.3,0-20.5-9.2-20.5-20.5v-53.3h-16.4v53.3c0,20.3,16.5,36.9,36.9,36.9h57.4c20.3,0,36.9-16.5,36.9-36.9v-86h41
-                                    V254C508,213.3,474.9,180.3,434.3,180.3z"/>
-                        </g>
+                        <path d="M106.5,32.9C70.4,32.8,41,62.2,41,98.3c0,36.2,29.4,65.6,65.5,65.6c36.1,0,65.5-29.4,65.5-65.5
+                                C172,62.3,142.6,32.9,106.5,32.9z M106.5,147.6c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2
+                                c27.1,0,49.2,22.1,49.2,49.2C155.7,125.5,133.6,147.6,106.5,147.6z"/>
                     </g>
+                </g>
+                <g>
                     <g>
-                        <g>
-                            <path d="M401.5,32.9c-36.1,0-65.5,29.4-65.5,65.5c-0.1,36.1,29.3,65.5,65.5,65.5c36.1,0,65.5-29.4,65.5-65.5
-                                    C467,62.3,437.6,32.9,401.5,32.9z M401.5,147.6c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2
-                                    c27.1,0,49.2,22.1,49.2,49.2C450.7,125.5,428.6,147.6,401.5,147.6z"/>
-                        </g>
+                        <path d="M434.3,180.3h-57.4v16.4h57.4c31.6,0,57.4,25.7,57.4,57.4V336H467v-57.4h-16.4v159.8c0,11.3-9.2,20.5-20.5,20.5h-20.5v-99
+                                h-16.4v99h-20.5c-11.3,0-20.5-9.2-20.5-20.5v-53.3h-16.4v53.3c0,20.3,16.5,36.9,36.9,36.9h57.4c20.3,0,36.9-16.5,36.9-36.9v-86h41
+                                V254C508,213.3,474.9,180.3,434.3,180.3z"/>
                     </g>
-                    </svg>
-                <p class="menu-text">сотрудники</p>
-            </div>
-        </a>
+                </g>
+                <g>
+                    <g>
+                        <path d="M401.5,32.9c-36.1,0-65.5,29.4-65.5,65.5c-0.1,36.1,29.3,65.5,65.5,65.5c36.1,0,65.5-29.4,65.5-65.5
+                                C467,62.3,437.6,32.9,401.5,32.9z M401.5,147.6c-27.1,0-49.2-22.1-49.2-49.2c0-27.1,22.1-49.2,49.2-49.2
+                                c27.1,0,49.2,22.1,49.2,49.2C450.7,125.5,428.6,147.6,401.5,147.6z"/>
+                    </g>
+                </g>
+                </svg>
 
-        <a class="menu-link" href="{{ path('lk') }}">
-            <div class="menu-item">
+            <p class="menu-text">сотрудники</p>
+        </div>
+        <div id="staff-sub-menu-item" class="sub-menu-item">
+            <ul>
+                {% for staff in getAllStaff() %}
+                        <li onclick="location.href='/lk';">
+                            {% if staff.avatar is not empty %}
+                                <img class="staff-sub-menu-item-mini-avatar" src="{{ asset('uploads/user/' ~ staff.avatar) }}" alt="">
+                            {% else %}
+                                <img class="staff-sub-menu-item-mini-avatar" src="{{ asset('assets/image/def-load-person.png') }}" alt="">
+                            {% endif %}
+                            <span class="menu-text">{{ staff.name }}</span>
+                        </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a class="menu-link" href="{{ path('lk/client') }}">
+            <div class="menu-item
+                {% if activeMenu is defined and activeMenu == 'client' %}
+                    active-menu
+                {% endif %}
+            ">
                 <svg class="menu-item-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 511.994 511.994" style="enable-background:new 0 0 511.994 511.994;" xml:space="preserve">
                     <g>
@@ -298,7 +329,7 @@
             </div>
         </a>
 
-        <a class="menu-link" href="{{ path('lk') }}">
+        <a class="menu-link" href="{{ path('info') }}">
             <div class="menu-item">
                 <svg class="menu-item-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
@@ -349,7 +380,7 @@
                         </g>
                     </g>
                 </svg>
-                <p class="menu-text">аналитика</p>
+                <p class="menu-text">аналитика(Тест)</p>
             </div>
         </a>
 
@@ -364,6 +395,13 @@
     </nav>
 </header>
 <section class="context">
+        <div class="top-line">
+            <div class="breadcrumb">
+                {% block breadcrumbs %}
+                {% endblock %}
+            </div>
+            <p class="top-line-date">{{ getTime() }}</p>
+        </div>
     {% block context %}
     {% endblock %}
 </section>

@@ -1,0 +1,53 @@
+{#<p>{{ date }}</p>#}
+<div class="table-days">
+    <div></div>
+    {% for i in range(0, 23) %}
+        <div class="table-day-week">{{ i }}</div>
+    {% endfor %}
+
+    {% for day in days %}
+        <div class="table-day-week">{{ day.title }}</div>
+        {% for i in range(0, 23) %}
+            <div class="table-day-cell" data-date="{{ day.date }}" data-time="{{ i }}">
+                {% if day.timetable is not empty and i in day.timetable.getTimetable() %}
+                    <div class="working-day"></div>
+                {% else %}
+                    <div class="empty-day"></div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+{#    <div class="table-day-week">Пн</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Вт</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Ср</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        {% if i == 5 %}#}
+{#            <div class="table-day-cell"><div class="working-day"></div></div>#}
+{#        {% else %}#}
+{#            <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Чт</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Пт</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Сб</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+{#    <div class="table-day-week">Вс</div>#}
+{#    {% for i in range(0, 23) %}#}
+{#        <div class="table-day-cell"><div class="empty-day"></div></div>#}
+{#    {% endfor %}#}
+</div>

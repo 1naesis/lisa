@@ -10,7 +10,9 @@
     --color-3-main: #BBC9B3;
     --color-4-main: #333333;
 }
-
+.hidden-block{
+    display: none;
+}
 body, html {
     font-family: 'Montserrat', sans-serif;
     /* font-family: 'Roboto', sans-serif; */
@@ -361,8 +363,15 @@ p{
 .header.minimal{
     min-width: 100px;
 }
+.wrapper-open-close-menu{
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+}
+.header.minimal.wrapper-open-close-menu{
+    justify-content: center;
+}
 .open-close-menu{
-    position: absolute;
     height: 25px;
     width: 25px;
     top: 10px;
@@ -376,8 +385,20 @@ p{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
     margin-bottom: 20px;
+}
+.user-img{
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    border-radius: 50px;
+}
+.user-img>img{
+    width: 56px;
+    height: 56px;
+}
+.user-name{
+    margin-top: 4px;
 }
 .name{
     font-family: Montserrat;
@@ -422,6 +443,34 @@ p{
     margin-left: 10px;
     margin-right: 10px;
     padding: 10px 10px;
+}
+.sub-menu-item{
+    display: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px 10px;
+    color: var(--color-1-main);
+    font-family: Montserrat;
+    /*font-weight: 500;*/
+    font-size: 15px;
+}
+.sub-menu-item li{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+.sub-menu-item li img{
+    margin-right: 10px;
+}
+.sub-menu-item.active{
+    display: block;
+}
+.staff-sub-menu-item-mini-avatar{
+    height: 25px;
+    width: 25px;
+    border-radius: 50px;
 }
 .menu-item.minimal{
     justify-content: center;
@@ -724,6 +773,7 @@ p{
     padding: 29px 43px 29px;
     width: 100%;
 }
+
 .main-info-edit-staff{
     display: flex;
 }
@@ -764,6 +814,13 @@ p{
 .btns-edit-staff{
     display: flex;
     justify-content: space-between;
+}
+.btns-edit-staff-services{
+    margin: 15px 0;
+    justify-content: center;
+}
+.btns-edit-staff-services>button{
+    border-radius: 5px;
 }
 .btn-success{
     background: var(--color-2-main);
@@ -835,11 +892,10 @@ p{
     bottom: 2px;
 }
 .title-position{
-    font-family: Roboto;
-    font-weight: 900;
+    font-family: Montserrat;
+    font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    font-variant: small-caps;
     margin-left: 25px;
     color: #000000;
 }
@@ -962,6 +1018,10 @@ p{
 .field-company{
     display: flex;
 }
+.field-staff-services{
+    display: flex;
+    margin-bottom: 10px;
+}
 .field-company-timetable{
     display: flex;
     justify-content: center;
@@ -980,7 +1040,7 @@ p{
     cursor: pointer;
 }
 .title-company-field{
-    width: 100px;
+    width: 150px;
     margin-bottom: 29px;
 }
 .title-company-field>p{
@@ -993,8 +1053,41 @@ p{
     width: 100%;
     margin-left: 39px;
 }
+.input-staff-services-field-block{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 20px;
+}
+.input-staff-services-field-btn{
+    cursor: pointer;
+    fill: var(--color-1-main);
+    background-color: var(--color-2-main);
+    padding: 2px;
+    border-radius: 3px;
+}
+.input-staff-time-field-btn{
+    fill: var(--color-1-main);
+    background-color: var(--color-2-main);
+    padding: 2px;
+    border-radius: 3px;
+}
+.input-staff-services-field-block>input{
+    margin-right: 10px;
+}
 .input-company-field-block-timetable{
     margin-left: 39px;
+}
+.input-staff-services-field{
+    background: #FFFFFF;
+    border: 1px solid var(--color-3-main);
+    box-sizing: border-box;
+    border-radius: 3px;
+    height: 30px;
+    resize: none;
+    padding: 2px 4px;
+    outline: none;
+    width: 90%;
 }
 .input-company-field{
     background: #FFFFFF;

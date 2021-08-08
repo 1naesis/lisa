@@ -1,0 +1,59 @@
+{% extends 'site/base.html.twig' %}
+
+{% block title %}Че нужно?{% endblock %}
+
+{% block body %}
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+        h1{
+            margin-bottom: 10px;
+        }
+        a{
+            color: #000;
+            margin-bottom: 50px;
+        }
+    </style>
+    
+    <div class="main">
+        <a href="{{ path('lk/setting') }}"><h1>В настройки!</h1></a>
+        <h1>Че надо?</h1>
+        <ul>
+            <li>
+                <b>Правки</b><br>
+                <ul style="margin-left: 30px">
+                    <li>Перенести ссылку на записи в настройки, убрать ссылку на записи в меню</li>
+                    <li>Фиксация меню</li>
+                </ul>
+            </li>
+            <li>
+                <b>Создание записей:</b><br>
+                <ul style="margin-left: 30px">
+                    <li>составить структуру БД</li>
+                </ul>
+            </li>
+            <br>
+            <li>Удаление сотрудников</li>
+            <li>Удаление категорий услуг</li>
+            <li>Удаление должностей</li>
+            <li>Выводы ошибок на всем сайте!</li>
+            <li>
+                <b>На будущее:</b><br>
+                <ul style="margin-left: 30px">
+                    <li>Запретить создание сотрудников без компании!</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}

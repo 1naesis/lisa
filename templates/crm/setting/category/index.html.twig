@@ -1,19 +1,16 @@
 {% extends 'crm/base.html.twig' %}
+{% block breadcrumbs %}
+    <p class="top-line-title">
+        <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
+        <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </p>
+    <p class="top-line-next-page">
+        Категории услуг
+    </p>
+{% endblock %}
 {% block context %}
-    <div class="top-line">
-        <div class="breadcrumb">
-            <p class="top-line-title">
-                <a class="breadcrumb-item-link" href="{{ path('lk/setting') }}">Настройки</a>
-                <svg class="breadcrumb-item" width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 16.5L11 8.80769L0.999999 1.5" stroke="#966B59" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </p>
-            <p class="top-line-next-page">
-                Категории услуг
-            </p>
-        </div>
-        <p class="top-line-date">8 Апрель 2021 18:50</p>
-    </div>
     <!-- <div class="filter-block">
         <p class="title-block-title">Тут фильтрация</p>
     </div> -->
